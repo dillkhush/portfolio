@@ -6,11 +6,11 @@ import { motion } from 'framer-motion'
 export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setStatus('loading')
 
-    const form = new FormData(e.target)
+    const form = new FormData(e.currentTarget)
     const payload = {
       name: form.get('name'),
       email: form.get('email'),
@@ -25,7 +25,7 @@ export default function Contact() {
 
     if (res.ok) {
       setStatus('sent')
-      e.target.reset()
+      e.currentTarget.reset()
     } else {
       setStatus('error')
     }
@@ -42,7 +42,7 @@ export default function Contact() {
     >
       <div className="max-w-xl mx-auto px-6">
         <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
-        <p className="text-gray-300 text-lg mb-8">
+        <p className="text-gray-300 text-lg mb-8 dark:text-gray-700">
           Drop me a message and I’ll get back to you!
         </p>
 
@@ -51,25 +51,25 @@ export default function Contact() {
             name="name"
             required
             placeholder="Your Name"
-            className="bg-[#1a1a1a] border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
+            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
           />
           <input
             name="email"
             type="email"
             required
             placeholder="Your Email"
-            className="bg-[#1a1a1a] border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
+            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
           />
           <textarea
             name="message"
             required
             rows={4}
             placeholder="Your Message"
-            className="bg-[#1a1a1a] border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
+            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
           />
           <button
             type="submit"
-            className="bg-[#1a1a1a] border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
+            className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-500 transition"
             disabled={status === 'loading'}
           >
             {status === 'loading' ? 'Sending...' : 'Send Message'}

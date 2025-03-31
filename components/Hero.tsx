@@ -21,7 +21,7 @@ export default function Hero() {
         transition={{ duration: 0.8 }}
         className="text-6xl md:text-7xl font-extrabold mb-4 leading-tight"
         >
-        Hi, I'm{' '}
+        Hi, I'm → I&apos;m{' '}
         <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
