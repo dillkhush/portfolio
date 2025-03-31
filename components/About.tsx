@@ -63,7 +63,6 @@ export default function About() {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
-git add .
         <div className="text-center md:text-left">
           <h2 className="text-3xl font-bold mb-4">About Me</h2>
           <p className="text-lg text-gray-300 dark:text-gray-800 leading-relaxed mb-4">
