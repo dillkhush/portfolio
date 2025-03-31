@@ -67,7 +67,7 @@ export default function About() {
         <div className="text-center md:text-left">
           <h2 className="text-3xl font-bold mb-4">About Me</h2>
           <p className="text-lg text-gray-300 dark:text-gray-800 leading-relaxed mb-4">
-          I'm → I&apos;m<span className="text-white dark:text-black font-semibold">Dilkhush Choudhary</span>, a
+          I&apos;m<span className="text-white dark:text-black font-semibold">Dilkhush Choudhary</span>, a
             Computer Science Engineer and full-stack developer with a passion for
             building clean, fast, and modern web applications. I specialize in
             React, Next.js, and creating stunning UIs with Tailwind and Framer
