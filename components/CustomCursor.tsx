@@ -1,36 +1,76 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { motion, useSpring, useMotionValue } from 'framer-motion'
+import { useEffect, useState } from 'react'
+
+const TRAIL_LENGTH = 6
 
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null)
+  const [positions, setPositions] = useState<Array<{ x: number; y: number }>>([])
+  const [isPointer, setIsPointer] = useState(false)
+
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  const smoothX = useSpring(mouseX, { stiffness: 300, damping: 30 })
+  const smoothY = useSpring(mouseY, { stiffness: 300, damping: 30 })
 
   useEffect(() => {
-    const cursor = cursorRef.current
-    if (!cursor) return
+    const moveCursor = (e: MouseEvent) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
 
-    const move = (e: MouseEvent) => {
-      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
+      const target = e.target as HTMLElement
+      const isInteractive = target.closest('a, button, [role="button"], input, textarea')
+      setIsPointer(!!isInteractive)
+
+      setPositions((prev) => {
+        const next = [...prev.slice(-TRAIL_LENGTH + 1), { x: e.clientX, y: e.clientY }]
+        return next
+      })
     }
 
-    const click = () => {
-      cursor.classList.add('scale-150')
-      setTimeout(() => cursor.classList.remove('scale-150'), 150)
-    }
-
-    window.addEventListener('mousemove', move)
-    window.addEventListener('mousedown', click)
-
-    return () => {
-      window.removeEventListener('mousemove', move)
-      window.removeEventListener('mousedown', click)
-    }
-  }, [])
+    window.addEventListener('mousemove', moveCursor)
+    return () => window.removeEventListener('mousemove', moveCursor)
+  }, [mouseX, mouseY])
 
   return (
-    <div
-      ref={cursorRef}
-      className="fixed top-0 left-0 z-[9999] w-4 h-4 rounded-full pointer-events-none bg-blue-500 mix-blend-difference transition-transform duration-150 ease-out"
-    />
+    <>
+      {/* Cursor trail */}
+      {positions.map((pos, index) => (
+        <motion.div
+          key={index}
+          className="fixed z-[9998] w-3 h-3 bg-blue-500/20 rounded-full pointer-events-none hidden md:block"
+          style={{
+            left: 0,
+            top: 0,
+            x: pos.x,
+            y: pos.y,
+            translateX: '-50%',
+            translateY: '-50%',
+            opacity: (index + 1) / TRAIL_LENGTH,
+            scale: 1 - index * 0.1,
+            filter: 'blur(2px)',
+          }}
+        />
+      ))}
+
+      {/* Main cursor orb */}
+      <motion.div
+        className={`fixed z-[9999] w-4 h-4 rounded-full pointer-events-none hidden md:block transition-colors duration-200 ${
+          isPointer
+            ? 'bg-blue-500 scale-150 mix-blend-difference'
+            : 'bg-white/80'
+        }`}
+        style={{
+          left: 0,
+          top: 0,
+          x: smoothX,
+          y: smoothY,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+      />
+    </>
   )
 }

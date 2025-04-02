@@ -4,9 +4,20 @@ import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
@@ -17,10 +28,20 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 backdrop-blur-md bg-white/10 dark:bg-white/5 border border-white/10 shadow-md rounded-full flex items-center justify-between w-[90%] max-w-3xl"
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 
+        flex items-center justify-between w-[90%] max-w-3xl 
+        rounded-full transition-all duration-300
+        ${
+          scrolled
+            ? 'backdrop-blur-md bg-white/10 dark:bg-white/5 border border-white/10 shadow-md'
+            : 'bg-transparent'
+        }`}
     >
       {/* Logo */}
-      <Link href="/" className="text-lg font-bold text-white dark:text-white tracking-wide">
+      <Link
+        href="/"
+        className="text-lg font-bold text-white dark:text-white tracking-wide"
+      >
         Dilkhush.dev
       </Link>
 

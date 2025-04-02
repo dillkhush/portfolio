@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Reveal from '@/components/Reveal'
 
 export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
@@ -32,21 +33,18 @@ export default function Contact() {
   }
 
   return (
-    <motion.section
-      id="contact"
-      className="py-24 max-w-3xl mx-auto px-6"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <h2 className="text-3xl font-bold text-center mb-8">Contact Me</h2>
+    <section id="contact" className="py-24 max-w-3xl mx-auto px-6">
+      <Reveal>
+        <h2 className="text-3xl font-bold text-center mb-8 text-white">Let’s Connect</h2>
+      </Reveal>
 
       <motion.form
         onSubmit={handleSubmit}
         className="card-glass backdrop-blur-md border border-white/10 p-8 space-y-6"
-        whileHover={{ scale: 1.01 }}
-        transition={{ type: 'spring', stiffness: 300 }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
       >
         <input
           type="text"
@@ -58,7 +56,7 @@ export default function Contact() {
         <input
           type="email"
           name="email"
-          placeholder="Your Email"
+          placeholder="you@example.com"
           required
           className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -81,12 +79,16 @@ export default function Contact() {
         </motion.button>
 
         {status === 'sent' && (
-          <p className="text-green-400 text-sm text-center">Your message has been sent!</p>
+          <p className="text-green-400 text-sm text-center flex items-center justify-center gap-2">
+            ✅ Your message has been sent!
+          </p>
         )}
         {status === 'error' && (
-          <p className="text-red-400 text-sm text-center">Something went wrong. Please try again.</p>
+          <p className="text-red-400 text-sm text-center flex items-center justify-center gap-2">
+            ❌ Something went wrong. Please try again.
+          </p>
         )}
       </motion.form>
-    </motion.section>
+    </section>
   )
 }
