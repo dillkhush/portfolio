@@ -1,32 +1,34 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
 export default function BackgroundPattern() {
   return (
-    <motion.div
-      className="absolute inset-0 -z-10 flex justify-center items-center overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2 }}
-    >
+    <div className="absolute inset-0 -z-10 overflow-hidden">
       <svg
-        className="w-[800px] h-[800px] blur-3xl opacity-40 animate-spin-slow"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl opacity-40 w-[60rem] h-[60rem]"
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          fill="url(#grad)"
-          d="M46.1,-71.6C58.9,-62.5,68.4,-49.4,73.2,-35.5C77.9,-21.6,77.9,-6.9,76.7,8.5C75.5,23.9,73.2,39.9,64.5,51.2C55.8,62.4,40.7,68.9,25.7,74.6C10.7,80.2,-4.2,85.1,-20.4,83.2C-36.7,81.3,-54.3,72.7,-63.9,59.2C-73.5,45.7,-75,27.3,-76.2,9.1C-77.5,-9.1,-78.4,-27.2,-71.3,-41.6C-64.3,-56,-49.4,-66.6,-34.1,-74.1C-18.7,-81.5,-9.4,-85.8,3.6,-91.2C16.6,-96.6,33.3,-103.2,46.1,-71.6Z"
-          transform="translate(100 100)"
-        />
         <defs>
           <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#6366F1" />
-            <stop offset="100%" stopColor="#EC4899" />
+            <stop offset="0%" style={{ stopColor: '#6366F1', stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: '#EC4899', stopOpacity: 1 }} />
           </linearGradient>
         </defs>
+        <path fill="url(#grad)">
+          <animate
+            attributeName="d"
+            dur="15s"
+            repeatCount="indefinite"
+            values="
+              M44.4,-53.9C56.3,-42.1,63.7,-28,65.1,-13.5C66.5,1.1,61.9,16,54.4,30.3C46.8,44.5,36.2,58.1,21.8,64.6C7.4,71.1,-10.9,70.6,-27.3,64.2C-43.7,57.8,-58.2,45.6,-66.3,30.5C-74.4,15.4,-76.1,-2.7,-69.9,-18.2C-63.6,-33.7,-49.3,-46.6,-34.2,-58.1C-19.1,-69.7,-3.2,-79.8,12.5,-80.6C28.1,-81.5,44.4,-73.7,44.4,-53.9Z;
+
+              M40.2,-47.8C52.8,-38.9,63.1,-26.6,65.7,-12.5C68.4,1.7,63.3,17.6,54.3,31.7C45.3,45.9,32.4,58.3,17.1,63.6C1.8,69,-15.8,67.3,-33.6,60.7C-51.4,54,-69.5,42.4,-72.4,27.3C-75.4,12.1,-63.3,-6.5,-53.6,-24.5C-44,-42.6,-36.8,-60,-23.2,-68.5C-9.6,-77,-0.4,-76.5,12.7,-68.7C25.9,-60.8,41.7,-45.8,40.2,-47.8Z;
+
+              M44.4,-53.9C56.3,-42.1,63.7,-28,65.1,-13.5C66.5,1.1,61.9,16,54.4,30.3C46.8,44.5,36.2,58.1,21.8,64.6C7.4,71.1,-10.9,70.6,-27.3,64.2C-43.7,57.8,-58.2,45.6,-66.3,30.5C-74.4,15.4,-76.1,-2.7,-69.9,-18.2C-63.6,-33.7,-49.3,-46.6,-34.2,-58.1C-19.1,-69.7,-3.2,-79.8,12.5,-80.6C28.1,-81.5,44.4,-73.7,44.4,-53.9Z
+            "
+          />
+        </path>
       </svg>
-    </motion.div>
+    </div>
   )
 }

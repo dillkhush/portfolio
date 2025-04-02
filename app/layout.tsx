@@ -1,8 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import ScrollToTop from '../components/ScrollToTop'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import ScrollToTop from '@/components/ScrollToTop'
+import CustomCursor from '@/components/CustomCursor'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +15,7 @@ export const metadata = {
   openGraph: {
     title: 'Dilkhush Choudhary | Full-Stack Developer',
     description: 'A passionate developer building modern web experiences with Next.js, Tailwind CSS, and Framer Motion.',
-    url: 'https://your-vercel-domain.vercel.app', // change this to your real domain when ready
+    url: 'https://your-vercel-domain.vercel.app', // update with real domain
     type: 'website',
     images: [
       {
@@ -29,10 +31,9 @@ export const metadata = {
     title: 'Dilkhush Choudhary',
     description: 'Next.js Portfolio by Dilkhush',
     images: ['/og.png'],
-    creator: '@yourhandle', // optional
+    creator: '@yourhandle',
   },
 }
-
 
 export default function RootLayout({
   children,
@@ -40,12 +41,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
-          <main className="max-w-7xl mx-auto px-6">{children}</main>
+          <main className="pt-24 max-w-7xl mx-auto px-6">{children}</main>
           <Footer />
           <ScrollToTop />
+        </ThemeProvider>
       </body>
     </html>
   )

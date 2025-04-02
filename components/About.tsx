@@ -48,13 +48,14 @@ export default function About() {
   return (
     <motion.section
       id="about"
-      className="py-24 bg-[#111] text-white dark:bg-white dark:text-black"
+      className="py-24"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+      {/* Intro */}
+      <div className="max-w-6xl mx-auto px-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-md p-10 flex flex-col md:flex-row items-center gap-12">
         <motion.img
           src="/profile.jpeg"
           alt="Dilkhush Choudhary"
@@ -63,14 +64,11 @@ export default function About() {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
+
         <div className="text-center md:text-left">
           <h2 className="text-3xl font-bold mb-4">About Me</h2>
-          <p className="text-lg text-gray-300 dark:text-gray-800 leading-relaxed mb-4">
-          I&apos;m <span className="text-white dark:text-black font-semibold">Dilkhush Choudhary</span>, a
-            Computer Science Engineer and full-stack developer with a passion for
-            building clean, fast, and modern web applications. I specialize in
-            React, Next.js, and creating stunning UIs with Tailwind and Framer
-            Motion.
+          <p className="text-lg text-gray-300 leading-relaxed mb-4">
+            I&apos;m <span className="text-white font-semibold">Dilkhush Choudhary</span>, a full-stack developer with a passion for building fast, modern, and user-focused web applications using React, Next.js, and Framer Motion.
           </p>
           <a
             href="/resume.pdf"
@@ -84,14 +82,14 @@ export default function About() {
 
       {/* Skills */}
       <motion.div
-        className="mt-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        className="mt-20 max-w-4xl mx-auto px-6"
         initial="hidden"
         whileInView="visible"
         transition={{ staggerChildren: 0.1 }}
         viewport={{ once: true }}
       >
         <motion.h3
-          className="text-2xl font-semibold mb-4 text-center"
+          className="text-2xl font-semibold mb-6 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -100,13 +98,13 @@ export default function About() {
         </motion.h3>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-3"
+          className="flex flex-wrap justify-center gap-4"
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         >
           {skills.map(({ name, icon: Icon }, index) => (
             <motion.div
               key={index}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-800 text-sm text-gray-200 dark:bg-gray-200 dark:text-black border border-gray-600 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 transition max-w-xs break-words"
+              className="card-glass shadow-md flex items-center gap-2 px-5 py-2 text-sm text-white border border-white/10 hover:scale-105 hover:shadow-blue-500/20 transition-transform duration-300"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -114,24 +112,24 @@ export default function About() {
               transition={{ duration: 0.4 }}
             >
               <Icon className="text-lg shrink-0" />
-              <span className="truncate">{name}</span>
+              <span className="whitespace-nowrap">{name}</span>
             </motion.div>
           ))}
         </motion.div>
       </motion.div>
 
-      {/* Timeline */}
-      <div className="mt-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Experience */}
+      <div className="mt-20 max-w-4xl mx-auto px-6">
         <h3 className="text-2xl font-semibold mb-8 text-center">Experience</h3>
-        <div className="space-y-6 border-l border-gray-600 pl-6">
+        <div className="space-y-6 border-l border-white/10 pl-6">
           {experience.map((exp, index) => (
             <div key={index} className="relative">
-              <div className="absolute -left-3 w-6 h-6 bg-blue-600 rounded-full border-4 border-[#111] dark:border-white" />
-              <h4 className="text-lg font-semibold">{exp.title}</h4>
-              <span className="text-sm text-gray-400 dark:text-gray-600 block mb-2">
+              <div className="absolute -left-3 w-6 h-6 bg-blue-600 rounded-full border-4 border-zinc-950 dark:border-white" />
+              <h4 className="text-lg font-semibold text-white">{exp.title}</h4>
+              <span className="text-sm text-gray-400 block mb-2">
                 {exp.company} · {exp.date}
               </span>
-              <p className="text-gray-300 dark:text-gray-700">{exp.description}</p>
+              <p className="text-gray-300">{exp.description}</p>
             </div>
           ))}
         </div>

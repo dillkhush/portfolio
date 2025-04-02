@@ -34,55 +34,59 @@ export default function Contact() {
   return (
     <motion.section
       id="contact"
-      className="py-24 bg-[#111] text-white text-center dark:bg-gray-100 dark:text-black"
+      className="py-24 max-w-3xl mx-auto px-6"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
-      <div className="max-w-xl mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
-        <p className="text-gray-300 text-lg mb-8 dark:text-gray-700">
-          Drop me a message and I’ll get back to you!
-        </p>
+      <h2 className="text-3xl font-bold text-center mb-8">Contact Me</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4 text-left">
-          <input
-            name="name"
-            required
-            placeholder="Your Name"
-            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
-          />
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="Your Email"
-            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
-          />
-          <textarea
-            name="message"
-            required
-            rows={4}
-            placeholder="Your Message"
-            className="w-full px-4 py-3 rounded bg-[#1a1a1a] text-white border border-gray-700 dark:bg-white dark:border-gray-300 dark:text-black"
-          />
-          <button
-            type="submit"
-            className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-500 transition"
-            disabled={status === 'loading'}
-          >
-            {status === 'loading' ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
+      <motion.form
+        onSubmit={handleSubmit}
+        className="card-glass backdrop-blur-md border border-white/10 p-8 space-y-6"
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: 'spring', stiffness: 300 }}
+      >
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          required
+          className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your Email"
+          required
+          className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <textarea
+          name="message"
+          placeholder="Your Message"
+          rows={5}
+          required
+          className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        />
+
+        <motion.button
+          type="submit"
+          disabled={status === 'loading'}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 transition text-white font-semibold shadow-md"
+        >
+          {status === 'loading' ? 'Sending...' : 'Send Message'}
+        </motion.button>
 
         {status === 'sent' && (
-          <p className="mt-4 text-green-400">Thanks! I’ll reply soon 🚀</p>
+          <p className="text-green-400 text-sm text-center">Your message has been sent!</p>
         )}
         {status === 'error' && (
-          <p className="mt-4 text-red-400">Something went wrong. Try again.</p>
+          <p className="text-red-400 text-sm text-center">Something went wrong. Please try again.</p>
         )}
-      </div>
+      </motion.form>
     </motion.section>
   )
 }
