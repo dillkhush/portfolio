@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
+import Image from 'next/image'
 
 interface ProjectCardProps {
   title: string
@@ -22,10 +23,13 @@ export default function ProjectCard({ title, description, tech, image, link }: P
       className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 overflow-hidden shadow-lg hover:shadow-blue-500/20 transition-all duration-300 group"
     >
       <div className="aspect-video w-full rounded-md overflow-hidden mb-4">
-        <img
+        <Image
           src={image}
           alt={title}
+          width={600}  // Set a fixed width for optimization
+          height={340} // Set a fixed height for optimization
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          priority // Optional: prioritize the image for faster loading if necessary
         />
       </div>
       <h3 className="text-xl font-semibold text-white mb-1">{title}</h3>

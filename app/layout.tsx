@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// Metadata export with themeColor moved to viewport
 export const metadata = {
   title: 'Dilkhush Choudhary | Full-Stack Developer',
   description: 'Portfolio of Dilkhush Choudhary – Building blazing-fast, immersive UIs with Next.js, Tailwind, and Framer Motion.',
@@ -16,7 +17,6 @@ export const metadata = {
   ],
   authors: [{ name: 'Dilkhush Choudhary', url: 'https://dilkhush.dev' }],
   creator: 'Dilkhush Choudhary',
-  themeColor: '#0a0a0a',
   openGraph: {
     title: 'Dilkhush Choudhary | Full-Stack Developer',
     description: 'Creating world-class web experiences with modern technologies.',
@@ -43,6 +43,10 @@ export const metadata = {
   },
 }
 
+// Viewport export with themeColor moved here
+export const viewport = {
+  themeColor: '#0a0a0a',
+}
 
 export default function RootLayout({
   children,

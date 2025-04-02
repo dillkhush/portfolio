@@ -1,7 +1,6 @@
-// components/useKonamiCode.tsx
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const KONAMI_CODE = [
   'ArrowUp', 'ArrowUp',
@@ -12,19 +11,21 @@ const KONAMI_CODE = [
 ]
 
 export default function useKonamiCode(callback: () => void) {
-  const [keys, setKeys] = useState<string[]>([])
-
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      setKeys((prev) => {
-        const next = [...prev, e.key].slice(-KONAMI_CODE.length)
-        if (JSON.stringify(next) === JSON.stringify(KONAMI_CODE)) {
-          callback()
-        }
-        return next
-      })
+      // Maintain the pressed keys in an array
+      const pressedKeys: string[] = [e.key];
+
+      // Check if the pressed keys match the KONAMI_CODE in sequence
+      if (pressedKeys.join('') === KONAMI_CODE.join('')) {
+        callback();
+      }
     }
+
     window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [callback])
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [callback]) // Only re-run when callback changes
 }
