@@ -12,13 +12,24 @@ const KONAMI_CODE = [
 
 export default function useKonamiCode(callback: () => void) {
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      // Maintain the pressed keys in an array
-      const pressedKeys: string[] = [e.key];
+    const buffer: string[] = []
 
-      // Check if the pressed keys match the KONAMI_CODE in sequence
-      if (pressedKeys.join('') === KONAMI_CODE.join('')) {
-        callback();
+    const onKeyDown = (e: KeyboardEvent) => {
+      buffer.push(e.key)
+      if (buffer.length > KONAMI_CODE.length) {
+        buffer.shift()
+      }
+
+      const matched =
+        buffer.length === KONAMI_CODE.length &&
+        buffer.every((key, index) => {
+          const expected = KONAMI_CODE[index]
+          return key.toLowerCase() === expected.toLowerCase()
+        })
+
+      if (matched) {
+        buffer.length = 0
+        callback()
       }
     }
 

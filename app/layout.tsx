@@ -1,33 +1,34 @@
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
+import { siteConfig } from '@/content'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' })
 
-// Metadata export with themeColor moved to viewport
-export const metadata = {
-  title: 'Dilkhush Choudhary | Full-Stack Developer',
-  description: 'Portfolio of Dilkhush Choudhary – Building blazing-fast, immersive UIs with Next.js, Tailwind, and Framer Motion.',
-  keywords: [
-    'Dilkhush Choudhary',
-    'Full-Stack Developer',
-    'React Developer',
-    'Next.js Portfolio',
-    'Frontend Engineer',
-    'UI/UX Developer',
-  ],
-  authors: [{ name: 'Dilkhush Choudhary', url: 'https://dilkhush.dev' }],
-  creator: 'Dilkhush Choudhary',
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: 'Technology',
   openGraph: {
-    title: 'Dilkhush Choudhary | Full-Stack Developer',
-    description: 'Creating world-class web experiences with modern technologies.',
-    url: 'https://dilkhush.dev',
-    siteName: 'Dilkhush.dev',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     images: [
       {
-        url: 'https://dilkhush.dev/api/og', // dynamic OG image!
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Dilkhush Choudhary Portfolio',
+        alt: `${siteConfig.name} portfolio`,
       },
     ],
     locale: 'en_US',
@@ -35,17 +36,20 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dilkhush Choudhary | Full-Stack Dev',
-    description: 'Modern portfolio crafted with Next.js + Tailwind.',
-    site: '@yourhandle',
-    creator: '@yourhandle',
-    images: ['https://dilkhush.dev/api/og'],
+    title: siteConfig.title,
+    description: siteConfig.description,
+    site: siteConfig.twitter.site,
+    creator: siteConfig.twitter.handle,
+    images: [siteConfig.ogImage],
+  },
+  alternates: {
+    canonical: siteConfig.url,
   },
 }
 
-// Viewport export with themeColor moved here
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: '#0a0a0a',
+  colorScheme: 'dark light',
 }
 
 export default function RootLayout({
@@ -55,7 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans bg-[var(--background)] text-[var(--foreground)]`}>
         {children}
       </body>
     </html>

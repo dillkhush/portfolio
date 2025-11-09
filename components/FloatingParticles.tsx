@@ -16,16 +16,41 @@ const generateParticles = (count: number) =>
 export default function FloatingParticles({ count = 30 }: { count?: number }) {
   const [mounted, setMounted] = useState(false)
   const [particles, setParticles] = useState(() => generateParticles(count))
+  const [enabled, setEnabled] = useState(true)
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updateEnabled = () => setEnabled(!reduceMotion.matches)
+    updateEnabled()
+    const listener = () => updateEnabled()
+
+    if (typeof reduceMotion.addEventListener === 'function') {
+      reduceMotion.addEventListener('change', listener)
+    }
+
     setMounted(true)
+
+    if (reduceMotion.matches) {
+      return () => {
+        if (typeof reduceMotion.removeEventListener === 'function') {
+          reduceMotion.removeEventListener('change', listener)
+        }
+      }
+    }
+
     const interval = setInterval(() => {
       setParticles(generateParticles(count))
     }, 30000)
-    return () => clearInterval(interval)
+
+    return () => {
+      clearInterval(interval)
+      if (typeof reduceMotion.removeEventListener === 'function') {
+        reduceMotion.removeEventListener('change', listener)
+      }
+    }
   }, [count])
 
-  if (!mounted) return null
+  if (!mounted || !enabled) return null
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">

@@ -4,108 +4,244 @@
 
 /* Theme Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #6366f1;
-  --card: rgba(255, 255, 255, 0.05);
+  --background: #010414;
+  --background-alt: #07122d;
+  --surface: rgba(10, 18, 38, 0.72);
+  --surface-solid: #0d1a32;
+  --surface-border: rgba(126, 148, 196, 0.28);
+  --surface-highlight: rgba(56, 189, 248, 0.12);
+  --surface-soft: rgba(14, 116, 144, 0.08);
 
-  --font-sans: 'Inter', sans-serif;
+  --foreground: #e8f0ff;
+  --foreground-muted: rgba(189, 205, 236, 0.78);
+  --muted-contrast: rgba(148, 163, 184, 0.45);
+  --headline-glow: rgba(59, 130, 246, 0.55);
+
+  --accent: #38bdf8;
+  --accent-secondary: #fbbf24;
+  --accent-tertiary: #a855f7;
+
+  --signature-primary: rgba(56, 189, 248, 0.45);
+  --signature-secondary: rgba(248, 113, 113, 0.35);
+  --signature-tertiary: rgba(168, 85, 247, 0.28);
+
+  --card: var(--surface);
   --font-mono: 'Geist Mono', monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-sans, 'Inter', sans-serif);
   --font-mono: var(--font-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: rgba(255, 255, 255, 0.05);
+    color-scheme: dark;
   }
 }
 
-/* Body Defaults */
 body {
-  @apply font-sans antialiased cursor-none;
-  background: var(--background);
+  @apply font-sans antialiased;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.18), transparent 58%),
+    radial-gradient(circle at 85% 12%, rgba(236, 72, 153, 0.16), transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(12, 74, 110, 0.18), transparent 66%),
+    var(--background);
   color: var(--foreground);
-  letter-spacing: 0.025em; /* Equivalent to tracking-wide */
-  line-height: 1.75;       /* Equivalent to leading-relaxed */
+  letter-spacing: 0.025em;
+  line-height: 1.75;
 }
 
-/* Scroll behavior */
+html.light {
+  --background: #f3f6ff;
+  --background-alt: #eef2ff;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: rgba(237, 242, 255, 0.95);
+  --surface-border: rgba(37, 99, 235, 0.2);
+  --surface-highlight: rgba(37, 99, 235, 0.12);
+  --surface-soft: rgba(37, 99, 235, 0.08);
+
+  --foreground: #121a2f;
+  --foreground-muted: rgba(62, 73, 104, 0.72);
+  --muted-contrast: rgba(148, 163, 184, 0.4);
+  --headline-glow: rgba(37, 99, 235, 0.28);
+
+  --accent: #2563eb;
+  --accent-secondary: #f97316;
+  --accent-tertiary: #7c3aed;
+
+  --signature-primary: rgba(37, 99, 235, 0.42);
+  --signature-secondary: rgba(249, 115, 22, 0.32);
+  --signature-tertiary: rgba(139, 92, 246, 0.3);
+
+  --card: var(--surface);
+  color-scheme: light;
+}
+
+html.light body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.22), transparent 58%),
+    radial-gradient(circle at 90% 15%, rgba(250, 204, 21, 0.2), transparent 63%),
+    radial-gradient(circle at 50% 100%, rgba(96, 165, 250, 0.16), transparent 70%),
+    var(--background);
+  color: var(--foreground);
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Subtle Grain Background */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -10;
-  background-image: url('/grain.png');
-  opacity: 0.05;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.14), transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.1), transparent 65%),
+    url('/grain.png');
+  opacity: 0.1;
   pointer-events: none;
 }
 
-/* Animations */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animate-spin-slow {
-  animation: spin-slow 40s linear infinite;
+html.light body::before {
+  opacity: 0.06;
 }
 
-@keyframes textGlow {
-  0%, 100% {
-    text-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent);
-  }
-  50% {
-    text-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent);
-  }
-}
-.animate-text-glow {
-  animation: textGlow 3s ease-in-out infinite;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display, var(--font-sans, 'Inter', sans-serif));
+  letter-spacing: 0.04em;
+  color: var(--foreground);
 }
 
-/* Custom Utilities */
+h1 {
+  font-weight: 600;
+  text-shadow: 0 0 40px var(--headline-glow);
+}
+
+h2,
+h3 {
+  font-weight: 500;
+}
+
+p,
+li,
+span,
+blockquote {
+  color: var(--foreground-muted);
+}
+
+strong {
+  color: var(--foreground);
+}
+
+a {
+  color: var(--accent);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-secondary);
+  text-shadow: 0 0 18px rgba(251, 191, 36, 0.35);
+}
+
 .card-glass {
   background: var(--card);
-  border-radius: 1rem; /* Tailwind's rounded-2xl = 1rem */
-  transition: all 0.3s ease;
+  border-radius: 1.5rem;
+  border: 1px solid var(--surface-border);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
+  box-shadow: 0 24px 110px rgba(12, 18, 47, 0.55);
 }
 
 .card-glass:hover {
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 36px 150px rgba(56, 189, 248, 0.28);
+}
+
+html.light .card-glass {
+  box-shadow: 0 26px 90px rgba(37, 99, 235, 0.15);
+}
+
+html.light .card-glass:hover {
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: 0 32px 120px rgba(37, 99, 235, 0.22);
 }
 
 .btn-primary {
-  background: var(--accent);
-  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-tertiary));
+  padding: 0.65rem 1.9rem;
   border-radius: 9999px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  color: #0f172a;
+  box-shadow: 0 18px 40px rgba(56, 189, 248, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary:hover {
-  background: color-mix(in srgb, var(--accent), black 20%);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 60px rgba(168, 85, 247, 0.35);
 }
 
 .input-glass {
-  @apply w-full px-4 py-3 bg-zinc-900/70 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)];
+  @apply w-full rounded-xl px-4 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.08);
 }
 
-/* 🎞 Retro Mode Visual FX */
+.input-glass:focus {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+}
+
+html.light .input-glass {
+  color: #111827;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+}
+
+html.light .input-glass:focus {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+}
+
+.chip-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.8);
+}
+
+html.light .chip-pill {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.26);
+  color: rgba(17, 24, 39, 0.7);
+}
+
+/* Retro mode keeps working */
 html.retro {
   filter: hue-rotate(190deg) saturate(1.8) contrast(1.2);
   background: black !important;
@@ -128,7 +264,212 @@ html.retro body::after {
 }
 
 @keyframes flicker {
-  0%   { opacity: 0.1; }
-  50%  { opacity: 0.2; }
+  0% { opacity: 0.1; }
+  50% { opacity: 0.2; }
   100% { opacity: 0.1; }
+}
+
+/* Signature background system */
+.signature-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -20;
+}
+
+.signature-background__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 7, 18, 0.92) 0%, rgba(3, 7, 18, 0.6) 100%);
+}
+
+html.light .signature-background__gradient {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.94) 0%, rgba(241, 245, 249, 0.58) 100%);
+}
+
+.signature-background__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+html.light .signature-background__canvas {
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+}
+
+.signature-layer {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.8;
+  transition: transform 0.6s ease-out;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+
+html.light .signature-layer {
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+.signature-layer--secondary {
+  filter: blur(140px);
+}
+
+.signature-layer--tertiary {
+  filter: blur(160px);
+}
+
+.signature-background__grid {
+  position: absolute;
+  inset: -20%;
+  background-image: linear-gradient(
+      rgba(59, 130, 246, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(59, 130, 246, 0.04) 1px,
+      transparent 1px
+    );
+  background-size: 140px 140px;
+  transform: skewY(-6deg);
+  opacity: 0.35;
+}
+
+html.light .signature-background__grid {
+  opacity: 0.22;
+  background-image: linear-gradient(
+      rgba(148, 163, 184, 0.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(148, 163, 184, 0.12) 1px,
+      transparent 1px
+    );
+}
+
+.signature-background__noise {
+  position: absolute;
+  inset: 0;
+  background: url('/grain.png');
+  opacity: 0.05;
+  mix-blend-mode: soft-light;
+}
+
+html.light .signature-background__noise {
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+}
+
+.signature-background__glyph {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.signature-background__glyph-text {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 18vw, 12rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.07);
+  text-shadow: 0 0 40px rgba(59, 130, 246, 0.35);
+  position: relative;
+}
+
+html.light .signature-background__glyph-text {
+  color: rgba(37, 99, 235, 0.1);
+  text-shadow: 0 0 60px rgba(37, 99, 235, 0.23);
+}
+
+.signature-background__glyph-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(14rem, 32vw, 24rem);
+  height: clamp(14rem, 32vw, 24rem);
+  border-radius: 9999px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 120px rgba(59, 130, 246, 0.18);
+  transform: translate(-50%, -50%);
+  animation: glyphPulse 6s ease-in-out infinite;
+}
+
+html.light .signature-background__glyph-ring {
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 140px rgba(37, 99, 235, 0.25);
+}
+
+.signature-marquee {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+.signature-marquee__track {
+  display: flex;
+  gap: 2.5rem;
+  min-width: max-content;
+  animation: signatureMarquee 18s linear infinite;
+}
+
+.signature-marquee:hover .signature-marquee__track {
+  animation-play-state: paused;
+}
+
+.signature-marquee__item {
+  font-size: 0.85rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.8);
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  white-space: nowrap;
+}
+
+html.light .signature-marquee__item {
+  color: rgba(30, 41, 59, 0.68);
+}
+
+.signature-marquee__item::after {
+  content: '';
+  display: block;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 9999px;
+  background: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.8);
+}
+
+@keyframes signatureMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes glyphPulse {
+  0%, 100% {
+    opacity: 0.22;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.32;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
 }

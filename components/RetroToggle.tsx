@@ -26,8 +26,10 @@ export default function RetroToggle() {
       audioRef.current?.play()
     } else {
       // Stop audio when disabling
-      audioRef.current?.pause()
-      audioRef.current!.currentTime = 0
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
     }
   }
 
@@ -36,7 +38,8 @@ export default function RetroToggle() {
       onClick={toggleRetro}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      className="fixed bottom-6 right-6 z-50 bg-black/70 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-blue-600 transition-all"
+      aria-pressed={retro}
+      className="fixed bottom-6 left-6 z-50 bg-black/70 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-blue-600 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400 focus-visible:ring-offset-black"
     >
       <Sparkles className="w-4 h-4" />
       {retro ? 'Disable Retro' : 'Enable Retro'}

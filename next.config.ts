@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     serverActions: {},
   },
   images: {
-    domains: ['yourdomain.com'], // optional
+    remotePatterns: [],
   },
 }
 

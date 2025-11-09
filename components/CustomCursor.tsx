@@ -3,11 +3,12 @@
 import { motion, useSpring, useMotionValue } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-const TRAIL_LENGTH = 6
+const TRAIL_LENGTH = 4
 
 export default function CustomCursor() {
   const [positions, setPositions] = useState<Array<{ x: number; y: number }>>([])
   const [isPointer, setIsPointer] = useState(false)
+  const [enabled, setEnabled] = useState(false)
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -16,23 +17,55 @@ export default function CustomCursor() {
   const smoothY = useSpring(mouseY, { stiffness: 300, damping: 30 })
 
   useEffect(() => {
+    const pointerQuery = window.matchMedia('(pointer: fine)')
+    const updatePointer = () => setEnabled(pointerQuery.matches)
+    updatePointer()
+    const addChangeListener = () => {
+      if (typeof pointerQuery.addEventListener === 'function') {
+        pointerQuery.addEventListener('change', updatePointer)
+      }
+    }
+    const removeChangeListener = () => {
+      if (typeof pointerQuery.removeEventListener === 'function') {
+        pointerQuery.removeEventListener('change', updatePointer)
+      }
+    }
+
+    addChangeListener()
+
+    if (!pointerQuery.matches) {
+      return () => removeChangeListener()
+    }
+
+    let frame = 0
     const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX)
-      mouseY.set(e.clientY)
+      if (frame) cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        mouseX.set(e.clientX)
+        mouseY.set(e.clientY)
 
-      const target = e.target as HTMLElement
-      const isInteractive = target.closest('a, button, [role="button"], input, textarea')
-      setIsPointer(!!isInteractive)
+        const target = e.target as HTMLElement
+        const isInteractive = target.closest('a, button, [role="button"], input, textarea')
+        setIsPointer(!!isInteractive)
 
-      setPositions((prev) => {
-        const next = [...prev.slice(-TRAIL_LENGTH + 1), { x: e.clientX, y: e.clientY }]
-        return next
+        setPositions((prev) => {
+          const next = [...prev.slice(-TRAIL_LENGTH + 1), { x: e.clientX, y: e.clientY }]
+          return next
+        })
       })
     }
 
     window.addEventListener('mousemove', moveCursor)
-    return () => window.removeEventListener('mousemove', moveCursor)
+    return () => {
+      window.removeEventListener('mousemove', moveCursor)
+      if (frame) cancelAnimationFrame(frame)
+      removeChangeListener()
+    }
   }, [mouseX, mouseY])
+
+  if (!enabled) {
+    return null
+  }
 
   return (
     <>

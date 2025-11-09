@@ -1,6 +1,6 @@
 'use client'
 
-import {useState } from 'react'
+import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
@@ -13,9 +13,9 @@ import KonamiOverlay from '@/components/KonamiOverlay'
 import PageLoader from '@/components/PageLoader'
 import RetroToggle from '@/components/RetroToggle'
 import useConsoleEasterEgg from '@/components/useConsoleEasterEgg'
-import FloatingParticles from '@/components/FloatingParticles'
-import SEOHead from '@/components/SEOHead'
 import PageTransitionWrapper from '@/components/PageTransitionWrapper'
+import SignatureBackground from '@/components/SignatureBackground'
+import { Analytics } from '@vercel/analytics/react'
 
 let konamiCooldown = false
 
@@ -47,11 +47,10 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   })
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-    <SEOHead />
-      {/* 🌌 Ambient Particles */}
-      <FloatingParticles />
-
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <div className="fixed inset-0 -z-30 pointer-events-none">
+        <SignatureBackground variant="default" className="w-full h-full" />
+      </div>
       {/* ⏳ Fancy Page Loader */}
       <PageLoader />
 
@@ -63,7 +62,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
       <Navbar />
       <AnimatePresence mode="wait">
         <main className="pt-24 max-w-7xl mx-auto px-6 min-h-screen">
-        <PageTransitionWrapper>{children}</PageTransitionWrapper>
+          <PageTransitionWrapper>{children}</PageTransitionWrapper>
         </main>
       </AnimatePresence>
       <Footer />
@@ -72,6 +71,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
       <ScrollToTop />
       <CustomCursor />
       <RetroToggle />
+      <Analytics />
     </ThemeProvider>
   )
 }

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="./public/og.png" alt="Dilkhush.dev preview" width="720" />
+</div>
 
-## Getting Started
+# Dilkhush.dev – Experience Engineered Portfolio
 
-First, run the development server:
+> A cinematic, conversion-driven portfolio built with Next.js 15, Framer Motion, and a bespoke content layer.
+
+This codebase powers my public site (**[dilkhush.dev](https://dilkhush.dev)**). It blends interactive storytelling, measurable outcomes, and DX best practices so recruiters and founders can experience more than a static resume.
+
+## ✨ Highlights
+
+- **Immersive hero + retro easter eggs** powered by Framer Motion, Konami-mode styling, and WebGL-friendly gradients.
+- **Content-driven architecture** – projects, skills, and experience streamed from typed data modules and ready for CMS/MDX expansion.
+- **Human + machine friendly metadata** using Next.js App Router `Metadata` + dynamic Open Graph image pipeline.
+- **Accessibility-conscious flair** – prefers-reduced-motion fallbacks, keyboard-safe focus styling, and pointer-aware custom cursor.
+- **Lead capture engine** – contact form validated by Zod and routed through Resend with graceful degradation.
+- **Production-primed** – ESLint flat config, strict TypeScript, Tailwind design tokens, analytics hooks, and Vercel-ready configuration.
+
+## 🧱 Stack
+
+- [Next.js 15 App Router](https://nextjs.org/)
+- [React 19](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) with custom tokens
+- [Framer Motion](https://www.framer.com/motion/)
+- [next-themes](https://github.com/pacocoursey/next-themes) for adaptive theming
+- [Resend](https://resend.com/) (optional) for email automations
+- [Zod](https://zod.dev/) for form validation
+
+## 🚀 Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install     # or npm/yarn/bun
+pnpm dev         # start dev server at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create `.env.local` with the following (optional) keys:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=hello@dilkhush.dev
+CONTACT_FROM_EMAIL=portfolio@dilkhush.dev
+```
 
-## Learn More
+Without these, the contact endpoint falls back to a no-op response.
 
-To learn more about Next.js, take a look at the following resources:
+## 🧰 Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command        | Description                                  |
+|----------------|----------------------------------------------|
+| `pnpm dev`     | Run the Next.js dev server                   |
+| `pnpm build`   | Create a production build                    |
+| `pnpm start`   | Serve the production build                   |
+| `pnpm lint`    | Run ESLint with the Next.js config           |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🗺️ Roadmap
 
-## Deploy on Vercel
+- Add MDX support with Contentlayer for full case studies.
+- Introduce analytics dashboards & heatmaps inside the UI.
+- Ship Playwright visual regression tests for animations.
+- Build a “lab” route showcasing experiments and prototypes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Copyright © Dilkhush Choudhary.  
+The code is shared for portfolio transparency—please reach out before reusing significant chunks.
